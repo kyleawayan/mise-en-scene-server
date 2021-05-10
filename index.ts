@@ -34,6 +34,15 @@ wss.on("connection", (ws) => {
             message: `Welcome to room ${payload.roomId} with ${rooms[roomIndex].users.length} people`,
           })
         );
+        // to do: make these functions
+        rooms[roomIndex].users.forEach((user) => {
+          user.ws.send(
+            JSON.stringify({
+              action: "message",
+              message: `${payload.username} joined`,
+            })
+          );
+        });
         break;
       }
       case "playbackToggle": {
