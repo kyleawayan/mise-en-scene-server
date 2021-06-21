@@ -59,6 +59,20 @@ wss.on("connection", (ws) => {
         });
         break;
       }
+      case "click": {
+        const roomIndex = rooms.findIndex(
+          (room) => room.roomId === payload.roomId
+        );
+        rooms[roomIndex].users.forEach((user) => {
+          user.ws.send(
+            JSON.stringify({
+              action: "click",
+              message: `${payload.username} clicked`,
+            })
+          );
+        });
+        break;
+      }
       default: {
         ws.send("error");
         break;
